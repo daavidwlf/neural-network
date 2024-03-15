@@ -1,24 +1,4 @@
 import numpy as np
-import pandas as pd
-
-
-
-### import and convert data
-data  =  pd.read_csv('./mnist_train.csv')
-data = np.array(data)
-
-
-## randomize and slice the data
-np.random.shuffle(data)
-data = data[0:40000]
-print(np.shape(data))
-
-
-
-### some data parsing
-amtData, amtPixel = np.shape(data)
-label = data.T[0, :]
-pixel = data.T[1:amtData, :]
 
 
 
@@ -70,7 +50,7 @@ def reLuDerivative(array):
 
 
 ### function to get the optimal a2 vectors
-def getActualVector():
+def getActualVector(label):
     result = np.zeros((10, label.size))
     result[label, np.arange(label.size)] = 1
     return result
@@ -87,8 +67,8 @@ def forwardProp(pixel, w1, b1, w2, b2):
     a2 = softmax(u2)
     return u1, a1, u2, a2
 
-def backwardProp(u1, a1, u2, a2, w1, b1, w2, b2):
-    lossLayer2 = a2 - getActualVector()
+def backwardProp(u1, a1, u2, a2, w1, b1, w2, b2, amtData, label, pixel):
+    lossLayer2 = a2 - getActualVector(label)
     nw2 = 1/amtData * lossLayer2.dot(a1.T)
     nb2 =  1/amtData * np.sum(lossLayer2, axis=1, keepdims=True)
     lossLayer1  = w2.dot(lossLayer2) * reLuDerivative(u1)
@@ -99,7 +79,7 @@ def backwardProp(u1, a1, u2, a2, w1, b1, w2, b2):
 
 
 ##calc accuracy
-def getAccuracy(estimaed, label):
+def getAccuracy(estimaed, label, amtData):
     #print(estimaed)
     #print(label)
     return np.sum(estimaed == label) / amtData
@@ -107,22 +87,20 @@ def getAccuracy(estimaed, label):
 
 
 ### gradient descend to reduce costs
-def gradientDescend(iterations, rate):
+def gradientDescend(iterations, rate, label, pixel, amtData, amtPixel):
     w1, b1, w2, b2 = initializeWeightsAlt()
     for i in range(iterations+1):
         u1, a1, u2, a2 = forwardProp(pixel, w1, b1, w2, b2)
-        nw1, nb1, nw2, nb2 = backwardProp(u1, a1, u2, a2, w1, b1, w2, b2)
+        nw1, nb1, nw2, nb2 = backwardProp(u1, a1, u2, a2, w1, b1, w2, b2, amtData, label, pixel)
         w1, b1, w2, b2 = updateParams(w1, b1, w2, b2, nw1, nb1, nw2, nb2, rate)
 
 
         if(i % 20 == 0):
             print("Iteration:", i)
             estimated = np.argmax(a2, axis=0)
-            print("Accuracy:",getAccuracy(estimated, label)*100, "%")
+            print("Accuracy:",getAccuracy(estimated, label, amtData)*100, "%")
 
-
-###start
-gradientDescend(500, 0.0001)
+    return estimated
     
 
 

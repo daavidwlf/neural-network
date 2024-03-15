@@ -18,7 +18,9 @@ $I$ gets passed into the first layer and multiplied by the first matrix $W_{1}$ 
 
 $uL_{1} = W_{1} * I + \vec{b_{1}}$
 
-$\dim(uL_{1})= 10 \times m \hspace{0.2cm}\dim(W_{1}) = 10 \times 784 \hspace{0.2cm}\dim(b_{1}) = 10 \times 1$
+$\dim(uL_{1})= 10 \times m \hspace{0.4cm}
+\dim(W_{1}) = 10 \times 784 \hspace{0.4cm}
+\dim(b_{1}) = 10 \times 1$
 
 The unactivated Matrix $uL_{1}$ now needs to get passed through an activation function. The activation function used is called Rectefied Linear Uni (ReLu). ReLu simply converts all the nagative numbers into 0.
 
@@ -31,8 +33,9 @@ The input as now been converted into a matrix of $10 \times m $ values represent
 To calculate the values of the output layer another weights matrix $W_{2}$ needs to be mulitplied with $aL_{1}$. Additionally a bias vector $\vec{b_{2}}$ gets added.
 
 $uL_{2} = W_{2} * aL_{1} + \vec{b_{2}}$
-$\dim(uL_{2})= 10 \times m \hspace{0.2cm} 
-\dim(W_{1}) = 10 \times 10 \hspace{0.2cm} 
+
+$\dim(uL_{2})= 10 \times m \hspace{0.4cm} 
+\dim(W_{1}) = 10 \times 10 \hspace{0.4cm} 
 \dim(b_{1}) = 10 \times 1$
 
 The unactivated Matrix $uL_{2}$ now has to be passed through another activation function. To calucalte probabilities which represent each number 0 to 9 an activation function called softmax is being used. It takes the exponential values of each element and divides it by the sum those exponantial values for each input vector.
@@ -79,3 +82,35 @@ $b_{1} = b_{1} - \alpha * \frac{1}{m}\frac{\partial C_{2}}{\partial b_{1}}$
 $W_{2} = W_{2} - \alpha * \frac{2}{m}\frac{\partial C_{1}}{\partial W_{2}}$
 
 $b_{2} = b_{2} - \alpha * \frac{1}{m}\frac{\partial C_{1}}{\partial b_{2}}$
+
+## Results and Improvements 
+
+### Learning rate
+Results where higly depended on the applied learing rate.
+
+A learing rate $\alpha$ above 0.1 did lead to random guessing and no improvement what so ever. Interesting was that that estimated numbers were completly equal for all datasets after a few iterations.
+
+A learing rate $\alpha$ around 0.0001 seems to have the most success although the result was highly depend on the randomized starting point. Also the learing progress was quite slow so a lot of itereation had to be done.
+
+### Initial weights and biases
+
+To improve the starting point and therefor the result of the learing process I changed the random number generation.\
+Generating random float numbers basend on the gauss normal distribution with an expectancy of 0 and a variance of 1 as well as subtracting a spicific value seems to have a lot of potential and imporved the results drastically.
+
+$W_{1} = N(0,1) * \frac{1}{\sqrt{748}}$
+
+$b_{1} = N(0,1) * \frac{1}{\sqrt{10}}$
+
+$W_{2} = N(0,1) * \frac{1}{\sqrt{20}}$
+
+$b_{2} = N(0,1) * \frac{1}{\sqrt{784}}$
+
+### Numerical stability
+
+To garantee numerical stability and avoid overflow errors a modification to the softmax activation function had to be done. By subtracting the maximum value of each dataset from both exponents of the fraction the numbers get substantially smaller.
+
+$\frac{e^{x_{i}}}{\sum^me^{x_{i}}} = \frac{C * e^{x_{i}}}{C * \sum^me^{x_{i}}} = \frac{e^{\ln{C}} * e^{x_{i}}}{e^{\ln{C}} * \sum^me^{x_{i}}} = \frac{e^{x_{i}+C}}{\sum^me^{x_{i}+C}} = \frac{e^{x_{i}-max\{x_{i}\}}}{\sum^me^{x_{i}-max\{x_{i}\}}}$
+
+### Verdict
+
+The accuracy fluctuates between 60% and 85% depending on iterations and the random initial starting point. Further improvements could be made regarding the learing rate or the data set. Als more nodes or layers could be added to imporve accuracy.
