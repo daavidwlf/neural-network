@@ -12,20 +12,18 @@ The neural network consist of three layers. An input layer, an hidden layer and 
 ### Forward Propagation
 The input Vector $\vec{i}$ represents all 784 pixel values between 0 and 255.
 
-$
-\vec{i} = 
+$\vec{i} = 
 \begin{pmatrix}{}
 i_{1}\\
 .\\
 .\\
 .\\
 i_{784}\\
-\end{pmatrix}
-$<br><br>
+\end{pmatrix}$
+
 Of course not only one digit gets fed into the network. That's why there are $m$ input Vectors which thogether form the input matrix $I$.<br>
 
-$
-I = 
+$I = 
 \begin{pmatrix}{}
 i_{1_1}&.&.&i_{1_m}\\
 .&.&&.\\
@@ -33,20 +31,15 @@ i_{1_1}&.&.&i_{1_m}\\
 .&&&.\\
 i_{784_1}&.&.&i_{784_m}\\
 \end{pmatrix}
-\hspace{1cm}\dim(I) = 784 \times m
-$<br>
+\hspace{1cm}\dim(I) = 784 \times m$
 
 $I$ gets passed into the first layer and multiplied by the first matrix $W_{1}$ of weights. $W_{1}$ represents a matrix of weights initialized with float numbers between $-0.5$ and $0.5$. Additionally a bias $\vec{b_{1}}$ is added.
-<br><br>
-$
-uL_{1} = W_{1} * I + \vec{b_{1}}
-$
-<br><br>
-$
-\dim(uL_{1})= 10 \times m \hspace{0.2cm} 
+
+$uL_{1} = W_{1} * I + \vec{b_{1}}$
+
+$\dim(uL_{1})= 10 \times m \hspace{0.2cm} 
 \dim(W_{1}) = 10 \times 784 \hspace{0.2cm} 
-\dim(b_{1}) = 10 \times 1
-$
+\dim(b_{1}) = 10 \times 1$
 
 The unactivated Matrix $uL_{1}$ now needs to get passed through an activation function. The activation function used is called Rectefied Linear Uni (ReLu). ReLu simply converts all the nagative numbers into 0.
 
@@ -57,16 +50,11 @@ $aL_{1} = reLu(uL_{1})$
 The input as now been converted into a matrix of $10 \times m $ values represented by the activated Matrix $aL_{1}$. 
 
 To calculate the values of the output layer another weights matrix $W_{2}$ needs to be mulitplied with $aL_{1}$. Additionally a bias vector $\vec{b_{2}}$ gets added.
-<br><br>
-$
-uL_{2} = W_{2} * aL_{1} + \vec{b_{2}}
-$
-<br><br>
-$
-\dim(uL_{2})= 10 \times m \hspace{0.2cm} 
+
+$uL_{2} = W_{2} * aL_{1} + \vec{b_{2}}$
+$\dim(uL_{2})= 10 \times m \hspace{0.2cm} 
 \dim(W_{1}) = 10 \times 10 \hspace{0.2cm} 
-\dim(b_{1}) = 10 \times 1
-$
+\dim(b_{1}) = 10 \times 1$
 
 The unactivated Matrix $uL_{2}$ now has to be passed through another activation function. To calucalte probabilities which represent each number 0 to 9 an activation function called softmax is being used. It takes the exponential values of each element and divides it by the sum those exponantial values for each input vector.
 
