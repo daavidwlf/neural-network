@@ -28,7 +28,7 @@ $reLu(x) = max\{x,0\}$
 
 $aL_{1} = reLu(uL_{1})$
 
-The input as now been converted into a matrix of $10 \times m $ values represented by the activated Matrix $aL_{1}$. 
+The input as now been converted into a matrix of $10 \times m$ values represented by the activated Matrix $aL_{1}$. 
 
 To calculate the values of the output layer another weights matrix $W_{2}$ needs to be mulitplied with $aL_{1}$. Additionally a bias vector $\vec{b_{2}}$ gets added.
 
@@ -86,16 +86,16 @@ $b_{2} = b_{2} - \alpha * \frac{1}{m}\frac{\partial C_{1}}{\partial b_{2}}$
 ## Results and Improvements 
 
 ### Learning rate
-Results where higly depended on the applied learing rate.
+Results where highly depended on the applied learing rate.
 
 A learing rate $\alpha$ above 0.1 did lead to random guessing and no improvement what so ever. Interesting was that that estimated numbers were completly equal for all datasets after a few iterations.
 
-A learing rate $\alpha$ around 0.0001 seems to have the most success although the result was highly depend on the randomized starting point. Also the learing progress was quite slow so a lot of itereation had to be done.
+A learing rate $\alpha$ around 0.0001 seems to have the most success although the result was highly depend on the randomized starting point. Also the learning progress was quite slow so a lot of itereation had to be done.
 
 ### Initial weights and biases
 
-To improve the starting point and therefor the result of the learing process I changed the random number generation.\
-Generating random float numbers basend on the gauss normal distribution with an expectancy of 0 and a variance of 1 as well as subtracting a spicific value seems to have a lot of potential and imporved the results drastically.
+To improve the starting point and therefore the result of the learning process I changed the random number generation.\
+Generating random float numbers based on the gauss normal distribution with an expectancy of 0 and a variance of 1 as well as subtracting a spicific value seems to have a lot of potential and improved the results drastically.
 
 $W_{1} = N(0,1) * \frac{1}{\sqrt{748}}$
 
@@ -113,4 +113,4 @@ $\frac{e^{x_{i}}}{\sum^me^{x_{i}}} = \frac{C * e^{x_{i}}}{C * \sum^me^{x_{i}}} =
 
 ### Verdict
 
-The accuracy fluctuates between 60% and 85% depending on iterations and the random initial starting point. Further improvements could be made regarding the learing rate or the data set. Als more nodes or layers could be added to imporve accuracy.
+The accuracy fluctuates between 60% and 85% depending on iterations and the random initial starting point. Further improvements could be made regarding the learing rate or the data set. Also more nodes or layers could be added to improve accuracy.

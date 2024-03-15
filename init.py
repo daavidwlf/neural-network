@@ -35,4 +35,5 @@ element = 0
 
 estimated = gradientDescend(iterations, rate, label, pixel, amtData, amtPixel)
 
-plotDigit(pixel, label, estimated, element)
+if(plot):
+    plotDigit(pixel, label, estimated, element)
