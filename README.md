@@ -11,11 +11,8 @@ The neural network consist of three layers. An input layer, an hidden layer and 
 
 ### Forward Propagation
 The input Vector $\vec{i}$ represents all 784 pixel values between 0 and 255.
-$\vec{i}=\begin{pmatrix}{}i_{1}\\.\\.\\.\\i_{784}\\\end{pmatrix}$
 
-Of course not only one digit gets fed into the network. That's why there are $m$ input Vectors which thogether form the input matrix $I$.<br>
-
-$I=$ $\begin{pmatrix}{}i_{1_1}&.&.&i_{1_m}\\.&.&&.\\.&&.&.\\.&&&.\\i_{784_1}&.&.&i_{784_m}\\\end{pmatrix}$\hspace{1cm}\dim(I)=784\timesm$
+Of course not only one digit gets fed into the network. That's why there are $m$ input Vectors which thogether form the input matrix $I$.
 
 $I$ gets passed into the first layer and multiplied by the first matrix $W_{1}$ of weights. $W_{1}$ represents a matrix of weights initialized with float numbers between $-0.5$ and $0.5$. Additionally a bias $\vec{b_{1}}$ is added.
 
